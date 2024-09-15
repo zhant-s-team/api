@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return Usuario::all();
@@ -39,10 +36,8 @@ class UsuarioController extends Controller
             'nome' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|email|unique:usuarios,email,' . $id,
             'senha' => 'sometimes|required|string|min:8',
-            // Outros campos do modelo Usuario
         ]);
 
-        // Atualiza o usuário com os dados validados
         $usuario->update($validatedData);
         return response()->json($usuario, 200);
     }

@@ -11,54 +11,41 @@ class VeiculoController extends Controller
      */
     public function index()
     {
-        //
+        return Veiculo::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'modelo' => 'required|string|max:255',
+            'placa' => 'required|string|max:10|unique:veiculos',
+            'ano' => 'required|integer|min:1900|max:' . (date('Y')),
+        ]);
+        $veiculo = Veiculo::create($validatedData);
+        return response()->json($veiculo, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        return Veiculo::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $veiculo = Veiculo::findOrFail($id);
+        $validatedData = $request->validate([
+            'modelo' => 'sometimes|required|string|max:255',
+            'placa' => 'sometimes|required|string|max:10|unique:veiculos,placa,' . $id,
+            'ano' => 'sometimes|required|integer|min:1900|max:' . (date('Y')),
+        ]);
+
+        $veiculo->update($validatedData);
+        return response()->json($veiculo, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        Veiculo::destroy($id);
+        return response()->json(null, 204);
     }
 }
