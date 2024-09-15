@@ -6,59 +6,48 @@ use Illuminate\Http\Request;
 
 class ViagemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return Viagem::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'origem' => 'required|string|max:255',
+            'destino' => 'required|string|max:255',
+            'data' => 'required|date',
+            'veiculo_id' => 'required|exists:veiculos,id',
+            'motorista_id' => 'required|exists:motoristas,id',
+        ]);
+
+        $viagem = Viagem::create($validatedData);
+        return response()->json($viagem, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        return Viagem::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $viagem = Viagem::findOrFail($id);
+        $validatedData = $request->validate([
+            'origem' => 'sometimes|required|string|max:255',
+            'destino' => 'sometimes|required|string|max:255',
+            'data' => 'sometimes|required|date',
+            'veiculo_id' => 'sometimes|required|exists:veiculos,id',
+            'motorista_id' => 'sometimes|required|exists:motoristas,id',
+        ]);
+
+        $viagem->update($validatedData);
+        return response()->json($viagem, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        Viagem::destroy($id);
+        return response()->json(null, 204);
     }
 }
