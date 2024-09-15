@@ -6,59 +6,46 @@ use Illuminate\Http\Request;
 
 class PassagemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        return Passagem::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'origem' => 'required|string|max:255',
+            'destino' => 'required|string|max:255',
+            'preco' => 'required|numeric',
+            'data_viagem' => 'required|date',
+        ]);
+
+        $passagem = Passagem::create($validatedData);
+        return response()->json($passagem, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        return Passagem::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $passagem = Passagem::findOrFail($id);
+        $validatedData = $request->validate([
+            'origem' => 'sometimes|required|string|max:255',
+            'destino' => 'sometimes|required|string|max:255',
+            'preco' => 'sometimes|required|numeric',
+            'data_viagem' => 'sometimes|required|date',
+        ]);
+        $passagem->update($validatedData);
+        return response()->json($passagem, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        Passagem::destroy($id);
+        return response()->json(null, 204);
     }
 }

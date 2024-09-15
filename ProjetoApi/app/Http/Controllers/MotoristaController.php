@@ -22,7 +22,6 @@ class MotoristaController extends Controller
         return Motorista::findOrFail($id);
     }
 
-
     public function update(Request $request, string $id)
     {
         $motorista = Motorista::findOrFail($id);
