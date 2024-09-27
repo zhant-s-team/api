@@ -2,63 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rotas;
 use Illuminate\Http\Request;
 
 class RotaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return Rotas::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'origem' => 'required|string|max:100',
+            'destino' => 'required|string|max:100',
+            'data_hora' => 'required|date',
+            'paradas' => 'required|json',
+        ]);
+
+        $rotas = Rotas::create($validatedData);
+        return response()->json($rotas, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        return Rotas::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $rotas = Rotas::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'origem' => 'sometimes|required|string|max:100',
+            'destino' => 'sometimes|required|string|max:100',
+            'data_hora' => 'sometimes|required|date',
+            'paradas' => 'sometimes|required|json',
+        ]);
+
+        $rotas->update($validatedData);
+        return response()->json($rotas, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(int $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        Rotas::destroy($id);
+        return response()->json(null, 204);
     }
 }

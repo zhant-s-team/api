@@ -2,63 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Motorista;
 use Illuminate\Http\Request;
 
 class MotoristaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return Motorista::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nome' => 'required|string|max:100',
+            'disponibilidade' => 'required|string|max:20',
+        ]);
+
+        $motorista = Motorista::create($validatedData);
+        return response()->json($motorista, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        return Motorista::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $motorista = Motorista::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'nome' => 'sometimes|required|string|max:100',
+            'disponibilidade' => 'sometimes|required|string|max:20',
+        ]);
+
+        $motorista->update($validatedData);
+        return response()->json($motorista, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(int $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        Motorista::destroy($id);
+        return response()->json(null, 204);
     }
 }

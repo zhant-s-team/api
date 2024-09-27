@@ -32,7 +32,13 @@ return new class extends Migration
             $table->unsignedInteger('motorista_id'); // Chave estrangeira para 'motoristas'
 
             // Define 'motorista_id' como chave estrangeira que referencia a coluna 'id' na tabela 'motoristas'
-            $table->foreign('motorista_id')->references('id')->on('motoristas');
+            $table->foreign('motorista_id')->references('id')->on('motorista');
+
+            // Cria uma coluna 'cargas_id' do tipo inteiro sem sinal para armazenar a chave estrangeira que faz referência à tabela 'cargas'
+            $table->unsignedInteger('cargas_id'); // Chave estrangeira para 'viagem'
+
+            // Define 'cargas_id' como chave estrangeira que referencia a coluna 'id' na tabela 'cargas'
+            $table->foreign('cargas_id')->references('id')->on('cargas');
 
             // Cria uma coluna 'data_hora' do tipo dateTime para armazenar a data e a hora da viagem
             $table->dateTime('data_hora');
