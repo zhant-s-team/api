@@ -19,11 +19,32 @@ return new class extends Migration
             // Cria uma coluna 'nome' do tipo string com limite de 100 caracteres
             $table->string('nome', 100);
 
+            // Cria uma coluna 'data de nascimento' do tipo inteiro com limite de 2 caracteres
+            $table->String('data de nascimento', 10);
+
             // Cria uma coluna 'telefone' do tipo string com limite de 15 caracteres
             $table->string('telefone', 15);
 
+            // Cria uma coluna 'cep' do tipo int com limite de 200 caracteres
+            $table->date('data_de_nascimento');
+
+            // Cria uma coluna 'endereco' do tipo string com limite de 200 caracteres
+            $table->string('rua', 100);
+
             // Cria uma coluna 'endereco' do tipo string com limite de 200 caracteres
             $table->string('endereco', 200);
+
+            // Cria uma coluna 'endereco' do tipo string com limite de 200 caracteres
+            $table->string('complemento', 70);
+
+            // Cria uma coluna 'endereco' do tipo string com limite de 200 caracteres
+            $table->string('bairro', 70);
+
+            // Cria uma coluna 'endereco' do tipo string com limite de 200 caracteres
+            $table->string('cidade', 70);
+
+            // Cria uma coluna 'endereco' do tipo string com limite de 200 caracteres
+            $table->string('estado', 70);
 
             // Cria uma coluna 'email' do tipo string e garante que o valor seja único
             $table->string('email')->unique();

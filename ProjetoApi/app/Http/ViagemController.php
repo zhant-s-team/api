@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Viagem;
 use Illuminate\Http\Request;
 
 class ViagemController extends Controller
@@ -14,11 +15,12 @@ class ViagemController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'origem' => 'required|string|max:255',
-            'destino' => 'required|string|max:255',
-            'data' => 'required|date',
+            'rota_id' => 'required|exists:rotas,id',
             'veiculo_id' => 'required|exists:veiculos,id',
             'motorista_id' => 'required|exists:motoristas,id',
+            'cargas_id' => 'required|exists:cargas,id',
+            'data_hora' => 'required|date',
+            'status' => 'required|string|max:20',
         ]);
 
         $viagem = Viagem::create($validatedData);
@@ -34,11 +36,12 @@ class ViagemController extends Controller
     {
         $viagem = Viagem::findOrFail($id);
         $validatedData = $request->validate([
-            'origem' => 'sometimes|required|string|max:255',
-            'destino' => 'sometimes|required|string|max:255',
-            'data' => 'sometimes|required|date',
+            'rota_id' => 'sometimes|required|exists:rotas,id',
             'veiculo_id' => 'sometimes|required|exists:veiculos,id',
             'motorista_id' => 'sometimes|required|exists:motoristas,id',
+            'cargas_id' => 'sometimes|required|exists:cargas,id',
+            'data_hora' => 'sometimes|required|date',
+            'status' => 'sometimes|required|string|max:20',
         ]);
 
         $viagem->update($validatedData);
