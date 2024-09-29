@@ -31,7 +31,7 @@ class Viagem extends Model
     // Relacionamento com a tabela Veículos
     public function veiculo()
     {
-        return $this->belongsTo(Veiculos::class, 'veiculo_id');
+        return $this->belongsTo(Veiculo::class, 'veiculo_id');
     }
 
     // Relacionamento com a tabela Motoristas
@@ -43,7 +43,7 @@ class Viagem extends Model
     // Relacionamento com a tabela Rotas (caso esteja envolvida no contexto do sistema)
     public function rota()
     {
-        return $this->belongsTo(Rotas::class, 'rota_id');
+        return $this->belongsTo(Rota::class, 'rota_id');
     }
 
     public function cargas()
