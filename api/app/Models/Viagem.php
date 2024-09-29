@@ -10,7 +10,7 @@ class Viagem extends Model
     use HasFactory;
 
     // Define a tabela associada ao modelo
-    protected $table = 'viagem';
+    protected $table = 'viagens';
 
     // Permite a atribuição em massa para os campos especificados
     protected $fillable = [

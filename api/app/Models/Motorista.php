@@ -10,7 +10,7 @@ class Motorista extends Model
     use HasFactory;
 
     // Define a tabela associada ao modelo
-    protected $table = 'motorista';
+    protected $table = 'motoristas';
 
     // Permite a atribuição em massa para os campos especificados
     protected $fillable = ['nome', 'disponibilidade'];

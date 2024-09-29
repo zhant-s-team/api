@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Veiculos;
+use App\Models\Veiculo;
 use Illuminate\Http\Request;
 
 class VeiculosController extends Controller
 {
-    // Exibe uma lista de veículos
     public function index()
     {
-        $veiculos = Veiculos::all();
+        $veiculos = Veiculo::all();
         return response()->json($veiculos);
     }
 
-    // Exibe o formulário para criar um novo veículo
-    public function create()
-    {
-        // Você pode retornar uma view aqui, se necessário
-    }
 
-    // Armazena um novo veículo
     public function store(Request $request)
     {
         $request->validate([
@@ -30,21 +23,15 @@ class VeiculosController extends Controller
             'placa' => 'required|string|max:20',
         ]);
 
-        $veiculo = Veiculos::create($request->all());
+        $veiculo = Veiculo::create($request->all());
         return response()->json($veiculo, 201);
     }
 
     // Exibe um veículo específico
     public function show($id)
     {
-        $veiculo = Veiculos::findOrFail($id);
+        $veiculo = Veiculo::findOrFail($id);
         return response()->json($veiculo);
-    }
-
-    // Exibe o formulário para editar um veículo
-    public function edit($id)
-    {
-        // Você pode retornar uma view aqui, se necessário
     }
 
     // Atualiza um veículo específico
@@ -57,7 +44,7 @@ class VeiculosController extends Controller
             'placa' => 'required|string|max:20',
         ]);
 
-        $veiculo = Veiculos::findOrFail($id);
+        $veiculo = Veiculo::findOrFail($id);
         $veiculo->update($request->all());
         return response()->json($veiculo);
     }
@@ -65,7 +52,7 @@ class VeiculosController extends Controller
     // Remove um veículo específico
     public function destroy($id)
     {
-        $veiculo = Veiculos::findOrFail($id);
+        $veiculo = Veiculo::findOrFail($id);
         $veiculo->delete();
         return response()->json(null, 204);
     }
