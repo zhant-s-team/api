@@ -5,12 +5,16 @@ use App\Http\Controllers\VeiculosController;
 use App\Http\Controllers\MotoristaController;
 use App\Http\Controllers\RotaController;
 use App\Http\Controllers\ViagemController;
+use App\Http\Controllers\CargaController;
 
 // Rotas para Veículos
 Route::resource('veiculos', VeiculosController::class);
 
 // Rotas para Motoristas
 Route::resource('motoristas', MotoristaController::class);
+
+// Rotas para Motoristas
+Route::resource('cargas', CargaController::class);
 
 // Rotas para Rotas
 Route::resource('rotas', RotaController::class);
