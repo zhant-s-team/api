@@ -13,7 +13,7 @@ Route::resource('veiculos', VeiculosController::class);
 // Rotas para Motoristas
 Route::resource('motoristas', MotoristaController::class);
 
-// Rotas para Motoristas
+// Rotas para cargas
 Route::resource('cargas', CargaController::class);
 
 // Rotas para Rotas
