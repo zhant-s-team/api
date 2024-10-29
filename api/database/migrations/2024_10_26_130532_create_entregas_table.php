@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('entregas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('titulo');
+            $table->string('descricao');
+            $table->string('inicio');
+            $table->string('destino');
+            $table->string('porte_veiculo');
+            $table->string('carga');
+            $table->string('percurso');
         });
     }
 
