@@ -9,15 +9,15 @@ class CreateMotoristasTable extends Migration
     public function up()
     {
         Schema::create('motoristas', function (Blueprint $table) {
-            $table->id(); // Cria a coluna id como chave primária
-            $table->string('nome'); // Campo para o nome do motorista
-            $table->boolean('disponibilidade'); // Campo para a disponibilidade do motorista
-            $table->timestamps(); // Cria os campos created_at e updated_at
+            $table->id();
+            $table->string('nome');
+            $table->boolean('disponibilidade');
+            $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('motoristas'); // Remove a tabela ao desfazer a migration
+        Schema::dropIfExists('motoristas');
     }
 }

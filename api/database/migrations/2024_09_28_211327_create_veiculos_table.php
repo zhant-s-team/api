@@ -9,12 +9,12 @@ class CreateVeiculosTable extends Migration
     public function up()
     {
         Schema::create('veiculos', function (Blueprint $table) {
-            $table->id(); // Cria um campo de ID auto-incremental
-            $table->string('tipo'); // Campo para tipo do veículo
-            $table->float('capacidade'); // Campo para capacidade do veículo
-            $table->string('status'); // Campo para status do veículo
-            $table->string('placa'); // Campo para placa do veículo
-            $table->timestamps(); // Campos created_at e updated_at
+            $table->id();
+            $table->string('tipo'); 
+            $table->float('capacidade');
+            $table->string('status');
+            $table->string('placa');
+            $table->timestamps();
         });
     }
 
