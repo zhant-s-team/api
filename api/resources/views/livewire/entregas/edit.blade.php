@@ -7,7 +7,7 @@ use Livewire\Volt\Component;
 new class extends Component {
     public Entrega $entrega;
 
-
+    #[Validate('required')]
     public string $titulo = '';
     #[Validate('required|string')]
     public string $descricao = '';
@@ -15,6 +15,7 @@ new class extends Component {
     public string $inicio = '';
     #[Validate('required|string')]
     public string $destino = '';
+    #[Validate('required')]
     public string $porte_veiculo = '';
     #[Validate('required')]
     public string $carga = '';

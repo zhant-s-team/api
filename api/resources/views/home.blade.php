@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <livewire:entregas.list />
+
         <!-- Sistema de Filtros -->
         <div class="row justify-content-center mt-4">
             <div class="col-md-12">
@@ -36,7 +36,7 @@
             </div>
         </div>
         <!-- Fim da Caixa com "Rotas Disponíveis" -->
-
+        <livewire:entregas.list />
         <!-- Retângulos de Cargas Disponíveis -->
         <div class="row justify-content-center mt-4">
             <div class="col-md-12">
