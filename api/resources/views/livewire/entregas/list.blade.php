@@ -37,6 +37,15 @@ new class extends Component {
 
         $this->getEntregas();
     }
+
+    public function delete(Entrega $entrega): void
+    {
+        $this->authorize('delete', $entrega);
+
+        $entrega->delete();
+
+        $this->getEntregas();
+    }
 }; ?>
 
 <div>
@@ -67,6 +76,9 @@ new class extends Component {
                             <x-slot name="content">
                                 <x-dropdown-link wire:click="edit({{ $entrega->id }})">
                                     {{ __('Edit') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link wire:click="delete({{ $entrega->id }})" wire:confirm="Are you sure to delete this entrega?">
+                                    {{ __('Delete') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>

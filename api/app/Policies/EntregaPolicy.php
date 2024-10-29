@@ -45,7 +45,7 @@ class EntregaPolicy
      */
     public function delete(User $user, Entrega $entrega): bool
     {
-        //
+        return $this->update($user, $entrega);
     }
 
     /**
