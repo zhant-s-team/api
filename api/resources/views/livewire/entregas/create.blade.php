@@ -34,6 +34,8 @@ new class extends Component
 
         // Limpar os campos após o salvamento
         $this->reset(['titulo', 'descricao', 'inicio', 'destino', 'porte_veiculo', 'carga', 'percurso']);
+
+        $this->dispatch('entrega-created');
     }
 };
 ?>

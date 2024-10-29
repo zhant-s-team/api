@@ -1,4 +1,5 @@
-<div class="container-fluid">   
+<div class="container-fluid">
+    <livewire:entregas.list />
         <!-- Sistema de Filtros -->
         <div class="row justify-content-center mt-4">
             <div class="col-md-12">
