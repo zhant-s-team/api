@@ -21,7 +21,20 @@ class MotoristaController extends Controller
 
     public function store(Request $request)
     {
-        $motorista = Motorista::create($request->all());
+        $validatedData = $request->validate([
+            'nome' => 'required|string',
+            'cpf' => 'required|string|size:11',
+            'email' => 'required|email',
+            'senha' => 'required|string|min:8',
+            'telefone' => 'required|string',
+            'data_nascimento' => 'required|date',
+            'cep' => 'required|string',
+            'estado' => 'required|string',
+            'bairro' => 'required|string',
+            'rua' => 'required|string',
+        ]);
+
+        $motorista = Motorista::create($validatedData);
         return response()->json($motorista, 201);
     }
 

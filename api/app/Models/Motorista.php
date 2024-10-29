@@ -12,8 +12,18 @@ class Motorista extends Model
     // Define a tabela associada ao modelo
     protected $table = 'motoristas';
 
-    // Permite a atribuição em massa para os campos especificados
-    protected $fillable = ['nome', 'disponibilidade'];
+    protected $fillable = [
+        'nome',
+        'cpf',
+        'email',
+        'senha',
+        'telefone',
+        'data_nascimento',
+        'cep',
+        'estado',
+        'bairro',
+        'rua'
+    ];
 
     // Indica que a chave primária não é auto-incrementável
     public $incrementing = true;

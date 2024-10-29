@@ -10,8 +10,16 @@ class CreateMotoristasTable extends Migration
     {
         Schema::create('motoristas', function (Blueprint $table) {
             $table->id(); // Cria a coluna id como chave primária
-            $table->string('nome'); // Campo para o nome do motorista
-            $table->boolean('disponibilidade'); // Campo para a disponibilidade do motorista
+            $table->string('nome');
+            $table->string('cpf');
+            $table->string('email');
+            $table->string('senha');
+            $table->string('telefone');
+            $table->date('data_nascimento');
+            $table->string('cep');
+            $table->string('estado');
+            $table->string('bairro');
+            $table->string('rua');
             $table->timestamps(); // Cria os campos created_at e updated_at
         });
     }
