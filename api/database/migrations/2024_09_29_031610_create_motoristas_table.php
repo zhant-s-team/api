@@ -9,6 +9,7 @@ class CreateMotoristasTable extends Migration
     public function up()
     {
         Schema::create('motoristas', function (Blueprint $table) {
+
             $table->id(); // Cria a coluna id como chave primária
             $table->string('nome');
             $table->string('cpf');
@@ -26,6 +27,6 @@ class CreateMotoristasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('motoristas'); // Remove a tabela ao desfazer a migration
+        Schema::dropIfExists('motoristas');
     }
 }
