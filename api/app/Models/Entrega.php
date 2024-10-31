@@ -11,11 +11,17 @@ class Entrega extends Model
     use HasFactory;
 
     protected $fillable = [
-        'titulo', 'descricao', 'inicio', 'destino', 'porte_veiculo', 'carga', 'percurso'
+        'empresa_id', 'motorista_id', 'titulo', 'descricao',
+        'inicio', 'destino', 'porte_veiculo', 'carga', 'percurso'
     ];
 
-    public function user(): BelongsTo
+    public function empresa(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Empresa::class);
+    }
+
+    public function motorista(): BelongsTo
+    {
+        return $this->belongsTo(Motorista::class);
     }
 }
