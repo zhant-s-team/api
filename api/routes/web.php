@@ -8,6 +8,7 @@ use App\Http\Controllers\MotoristaController;
 use App\Http\Controllers\RotaController;
 use App\Http\Controllers\VeiculosController;
 use App\Http\Controllers\ViagemController;
+use App\Http\Controllers\CidadeController;
 
 Route::view('/', 'welcome');
 
@@ -34,5 +35,7 @@ Route::resource('motoristas', MotoristaController::class);
 Route::resource('cargas', CargaController::class);
 // Rotas de autenticação
 Auth::routes();
+
+Route::get('/cidades', [CidadeController::class, 'index']);
 
 require __DIR__.'/auth.php';
