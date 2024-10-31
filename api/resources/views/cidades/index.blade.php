@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lista de Cidades') }}
+            {{ __('Lista de Cidades: Sul do maranhão') }}
         </h2>
     </x-slot>
 
@@ -10,14 +10,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <ul>
-                        @if(isset($cidades) && is_array($cidades))
+                        @if(isset($cidades) && is_array($cidades) && count($cidades) > 0)
                             @foreach($cidades as $cidade)
                                 <li>
-                                    {{ $cidade['nome'] }} - {{ $cidade['municipio']['microrregiao']['mesorregiao']['UF']['nome'] }}
+                                    <strong>Cidade:</strong> {{ $cidade['municipio']['nome'] }} <br>
+                                    <strong>Microrregião:</strong> {{ $cidade['municipio']['microrregiao']['nome'] }} <br>
+                                    <strong>Mesorregião:</strong> {{ $cidade['municipio']['microrregiao']['mesorregiao']['nome'] }} <br>
+                                    <strong>Estado:</strong> {{ $cidade['municipio']['microrregiao']['mesorregiao']['UF']['nome'] }} <br>
+                                    <hr>
                                 </li>
                             @endforeach
                         @else
-                            <li>Nenhuma cidade encontrada.</li>
+                            <li>Nenhuma cidade relacionada a Balsas encontrada.</li>
                         @endif
                     </ul>
                 </div>

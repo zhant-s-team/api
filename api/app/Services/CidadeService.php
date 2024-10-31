@@ -13,21 +13,25 @@ class CidadeService
     {
         $this->client = new Client();
     }
-
     public function getCidades()
     {
         try {
             $response = $this->client->request('GET', 'https://servicodados.ibge.gov.br/api/v1/localidades/distritos?orderBy=nome');
             $data = json_decode($response->getBody()->getContents(), true);
 
-            // Aqui você pode mapear os dados se necessário
-            return $data;
+            //filtra cidades do sul do maranhao
+            $filteredCities = array_filter($data, function ($cidade) {
+                return isset($cidade['municipio']['microrregiao']['mesorregiao']['nome']) &&
+                       $cidade['municipio']['microrregiao']['mesorregiao']['nome'] === 'Sul Maranhense';
+            });
+
+            return array_values($filteredCities);
         } catch (RequestException $e) {
-            // Tratar exceções de requisição
             return [
                 'error' => true,
                 'message' => $e->getMessage(),
             ];
         }
     }
+
 }

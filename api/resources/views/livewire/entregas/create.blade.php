@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\CidadeService;
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
@@ -26,6 +27,14 @@ new class extends Component
     #[Validate('required|integer|min:1')]
     public int $percurso = 0;
 
+    public array $cidades = []; // Variável para armazenar as cidades
+
+    public function mount() // Método chamado ao montar o componente
+    {
+        $cidadeService = new CidadeService();
+        $this->cidades = $cidadeService->getCidades(); // Obtém as cidades da API
+    }
+
     public function store(): void
     {
         $validated = $this->validate();
@@ -37,8 +46,10 @@ new class extends Component
 
         $this->dispatch('entrega-created');
     }
+
 };
 ?>
+
 
 <form wire:submit.prevent="store">
     <input
@@ -53,17 +64,26 @@ new class extends Component
         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
     ></textarea>
 
-    <input
+    <select
         wire:model="inicio"
-        placeholder="Início"
         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    />
+    >
+        <option value="">Selecione a cidade de início</option>
+        @foreach ($cidades as $cidade)
+            <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
+        @endforeach
+    </select>
 
-    <input
+    <!-- Campo de seleção para Destino -->
+    <select
         wire:model="destino"
-        placeholder="Destino"
         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    />
+    >
+        <option value="">Selecione a cidade de destino</option>
+        @foreach ($cidades as $cidade)
+            <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
+        @endforeach
+    </select>
 
     <!-- Campo de seleção para Porte do Veículo -->
     <select
