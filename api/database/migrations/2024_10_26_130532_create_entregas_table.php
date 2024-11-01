@@ -14,14 +14,32 @@ return new class extends Migration
         Schema::create('entregas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('empresa_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('motorista_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('user_id'); // Adicionando a coluna user_id
             $table->string('titulo');
-            $table->string('descricao');
-            $table->string('inicio');
-            $table->string('destino');
-            $table->string('porte_veiculo');
+            $table->text('descricao');
+            $table->string('cidade_origem');
+            $table->string('cidade_destino');
+            $table->enum('tipo_veiculo', [
+                'Toco',
+                'Truck',
+                'Bitrem',
+                'Rodotrem',
+                'Carreta LS',
+                'Carreta Baú',
+                'Carreta Graneleira',
+                'Caçamba',
+                'Romeu e Julieta',
+                'Caminhão 3/4',
+                'Porta-contêiner'
+            ]);
             $table->string('carga');
-            $table->string('percurso');
+            $table->integer('percurso');
+            $table->enum('status', ['disponivel', 'em_andamento', 'concluido'])->default('disponivel');
+
+            // Chave estrangeira para a tabela users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

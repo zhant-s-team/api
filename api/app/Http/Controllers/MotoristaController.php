@@ -11,27 +11,25 @@ class MotoristaController extends Controller
     {
         $motoristas = Motorista::all();
         return response()->json($motoristas);
+        //return view('motoristas');
     }
 
     public function show($id)
     {
         $motorista = Motorista::find($id);
+
+        if (!$motorista) {
+            return response()->json(['message' => 'Motorista não encontrado'], 404);
+        }
+
         return response()->json($motorista);
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nome' => 'required|string',
-            'cpf' => 'required|string|size:11',
-            'email' => 'required|email',
-            'senha' => 'required|string|min:8',
-            'telefone' => 'required|string',
-            'data_nascimento' => 'required|date',
-            'cep' => 'required|string',
-            'estado' => 'required|string',
-            'bairro' => 'required|string',
-            'rua' => 'required|string',
+            'user_id' => 'required|exists:users,id', // Adicione a validação para user_id
+            'cnh' => 'required|string', // Ajuste para validar apenas a CNH
         ]);
 
         $motorista = Motorista::create($validatedData);
@@ -41,13 +39,29 @@ class MotoristaController extends Controller
     public function update(Request $request, $id)
     {
         $motorista = Motorista::find($id);
-        $motorista->update($request->all());
+
+        if (!$motorista) {
+            return response()->json(['message' => 'Motorista não encontrado'], 404);
+        }
+
+        $validatedData = $request->validate([
+            'user_id' => 'sometimes|exists:users,id', // Validação condicional
+            'cnh' => 'sometimes|string', // Validação condicional
+        ]);
+
+        $motorista->update($validatedData);
         return response()->json($motorista);
     }
 
     public function destroy($id)
     {
-        Motorista::destroy($id);
+        $motorista = Motorista::find($id);
+
+        if (!$motorista) {
+            return response()->json(['message' => 'Motorista não encontrado'], 404);
+        }
+
+        $motorista->delete();
         return response()->json(null, 204);
     }
 }

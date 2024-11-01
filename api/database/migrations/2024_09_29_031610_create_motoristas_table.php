@@ -6,26 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMotoristasTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('motoristas', function (Blueprint $table) {
-
-            $table->id(); // Cria a coluna id como chave primária
-            $table->string('nome');
-            $table->string('cpf');
-            $table->string('email');
-            $table->string('senha');
-            $table->string('telefone');
-            $table->date('data_nascimento');
-            $table->string('cep');
-            $table->string('estado');
-            $table->string('bairro');
-            $table->string('rua');
-            $table->timestamps(); // Cria os campos created_at e updated_at
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('cnh');
+            $table->timestamps();
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('motoristas');
     }
