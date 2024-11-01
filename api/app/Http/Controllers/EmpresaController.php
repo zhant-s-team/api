@@ -19,10 +19,11 @@ class EmpresaController extends Controller
     {
         $validatedData = $request->validate([
             'cnpj' => 'required|string',
+            'nome' => 'required|string',
             'rua' => 'required|string',
             'bairro' => 'required|string',
             'numero' => 'required|integer',
-            'logo' => 'nullable|string', // Adapte conforme necessário
+            'logo' => 'nullable|string',
         ]);
 
         // Define o user_id como o ID do usuário autenticado
@@ -32,13 +33,13 @@ class EmpresaController extends Controller
         return response()->json($empresa, 201);
     }
 
-    // Método para exibir uma empresa específica
+    // Exibir uma empresa
     public function show(Empresa $empresa)
     {
-        return response()->json($empresa); // Retorna a empresa como JSON
+        return response()->json($empresa);
     }
 
-    // Método para atualizar uma empresa existente
+    // Atualizar
     public function update(Request $request, Empresa $empresa)
     {
         $request->validate([
@@ -51,13 +52,13 @@ class EmpresaController extends Controller
         ]);
 
         $empresa->update($request->all());
-        return response()->json($empresa); // Retorna a empresa atualizada como JSON
+        return response()->json($empresa);
     }
 
-    // Método para deletar uma empresa
+    // Deletar
     public function destroy(Empresa $empresa)
     {
         $empresa->delete();
-        return response()->json(null, 204); // Retorna status 204 sem conteúdo
+        return response()->json(null, 204);
     }
 }

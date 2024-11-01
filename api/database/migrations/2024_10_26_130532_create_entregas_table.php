@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('empresa_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('motorista_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('user_id'); // Adicionando a coluna user_id
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('titulo');
             $table->text('descricao');
             $table->string('cidade_origem');
@@ -37,9 +36,6 @@ return new class extends Migration
             $table->string('carga');
             $table->integer('percurso');
             $table->enum('status', ['disponivel', 'em_andamento', 'concluido'])->default('disponivel');
-
-            // Chave estrangeira para a tabela users
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

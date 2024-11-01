@@ -1,4 +1,4 @@
-<form wire:submit.prevent="registerDriver">
+<form wire:submit.prevent="registerUser">
     <div>
         <label for="name">Nome</label>
         <input type="text" wire:model="name" required>
@@ -23,13 +23,7 @@
         @error('password_confirmation') <span>{{ $message }}</span> @enderror
     </div>
 
-    <div>
-        <label for="cnh">CNH</label>
-        <input type="text" wire:model="cnh" required>
-        @error('cnh') <span>{{ $message }}</span> @enderror
-    </div>
-
-    <button type="submit">Cadastrar Motorista</button>
+    <button type="submit">Cadastrar Usuario</button>
 
     @if (session()->has('message'))
         <div>{{ session('message') }}</div>

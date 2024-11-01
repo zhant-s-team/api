@@ -7,6 +7,12 @@
             <input type="text" id="cnpj" name="cnpj" required>
         </div>
 
+        <!-- Campo Nome -->
+        <div>
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required>
+        </div>
+
         <!-- Campo Rua -->
         <div>
             <label for="rua">Rua</label>

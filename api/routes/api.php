@@ -10,5 +10,5 @@ Route::post('motoristas', [MotoristaController::class, 'store']);
 Route::put('motoristas/{id}', [MotoristaController::class, 'update']);
 Route::delete('motoristas/{id}', [MotoristaController::class, 'destroy']);
 
-Route::get('empresas', [EmpresaController::class, 'index']);
+Route::get('/empresas', [EmpresaController::class, 'index']);
 Route::post('/empresas', [EmpresaController::class, 'store']);
