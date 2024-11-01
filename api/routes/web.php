@@ -34,7 +34,7 @@ Route::view('profile', 'profile')
 Route::get('/motoristas', [MotoristaController::class, 'index'])->name('motoristas');
 // Rota para a página inicial após login
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Rotas para Motoristas
+
 Route::resource('motoristas', MotoristaController::class);
 Route::get('/usuarios', function () {
     return view('usuarios');
