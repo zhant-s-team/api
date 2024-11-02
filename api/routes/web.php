@@ -2,12 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntregaController;
-use App\Http\Controllers\CargaController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MotoristaController;
-use App\Http\Controllers\RotaController;
-use App\Http\Controllers\VeiculosController;
-use App\Http\Livewire\UsuarioManager;
 use App\Http\Controllers\EmpresaController;
 
 Route::view('/', 'welcome');
@@ -22,14 +18,18 @@ Route::get('entregas', [EntregaController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('entregas');
 
-    Route::get('/motoristas', function () {
-        return view('livewire.motoristas');
-    })->name('motoristas');
+Route::get('/motoristas', function () {
+    return view('livewire.motoristas');
+})->name('motoristas');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-    Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');
+
+Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');
+
+Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
+
 
 Route::get('/motoristas', [MotoristaController::class, 'index'])->name('motoristas');
 // Rota para a página inicial após login

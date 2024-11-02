@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\EntregaStatus;
+use App\Enum\TipoCarro;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 

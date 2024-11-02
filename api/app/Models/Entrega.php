@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enum\EntregaStatus;
+use App\Enum\TipoCarro;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,26 +25,14 @@ class Entrega extends Model
         'status'
     ];
 
-    const TIPOS_VEICULO = [
-        'Toco',
-        'Truck',
-        'Bitrem',
-        'Rodotrem',
-        'Carreta LS',
-        'Carreta Baú',
-        'Carreta Graneleira',
-        'Caçamba',
-        'Romeu e Julieta',
-        'Caminhão 3/4',
-        'Porta-contêiner'
-    ];
 
-    const STATUS_ENTREGA = [
-        'disponivel',
-        'em_andamento',
-        'concluido'
-    ];
-
+    protected function casts(): array
+    {
+        return [
+            'tipo_veiculo' => TipoCarro::class,
+            'status' => EntregaStatus::class,
+        ];
+    }
     public function empresa(): BelongsTo
     {
         return $this->belongsTo(Empresa::class);

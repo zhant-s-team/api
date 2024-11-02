@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 class EmpresaController extends Controller
 {
     public function index()
-    {
-        $empresas = Empresa::all(); // Busca todas as empresas
-        return response()->json($empresas); // Retorna as empresas como JSON
-    }
+{
+    $empresas = Empresa::all();
+    //return response()->json($empresas); RETORNAR EM JSON
+    return view('livewire.empresas.list', compact('empresas')); // Retorna a view com as empresas
+}
 
     // Método para armazenar uma nova empresa
     public function store(Request $request)

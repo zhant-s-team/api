@@ -21,21 +21,11 @@ return new class extends Migration
             $table->string('cidade_origem');
             $table->string('cidade_destino');
             $table->enum('tipo_veiculo', [
-                'Toco',
-                'Truck',
-                'Bitrem',
-                'Rodotrem',
-                'Carreta LS',
-                'Carreta Baú',
-                'Carreta Graneleira',
-                'Caçamba',
-                'Romeu e Julieta',
-                'Caminhão 3/4',
-                'Porta-contêiner'
+                'TC','BT','RT','BU','TQ'
             ]);
             $table->string('carga');
             $table->integer('percurso');
-            $table->enum('status', ['disponivel', 'em_andamento', 'concluido'])->default('disponivel');
+            $table->enum('status', ['D', 'A', 'C '])->default('D');
         });
     }
 
