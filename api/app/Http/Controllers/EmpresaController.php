@@ -15,6 +15,10 @@ class EmpresaController extends Controller
         return view('livewire.empresas.list', compact('empresas')); // Retorna a view com as empresas
     }
 
+    public function create()
+{
+    return view('livewire.empresa-form'); // Ajuste o caminho se necessário
+}
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -78,6 +82,6 @@ class EmpresaController extends Controller
     public function destroy(Empresa $empresa)
     {
         $empresa->delete();
-        return response()->json(null, 204);
+        return redirect()->route('empresas')->with('success', 'Empresa excluída com sucesso!');
     }
 }

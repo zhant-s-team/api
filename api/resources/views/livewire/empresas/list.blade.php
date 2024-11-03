@@ -9,6 +9,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <a href="{{ route('empresas.create') }}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded">
+                        +
+                    </a> <!-- Botão para criar nova empresa -->
+
                     @if($empresas->isEmpty())
                         <p>Nenhuma empresa cadastrada.</p>
                     @else
@@ -41,7 +45,12 @@
                                         </td>
                                         <td class="border px-4 py-2">
                                             <a href="{{ route('empresas.edit', $empresa) }}" class="text-blue-500 hover:underline">Editar</a>
-                                        </td> <!-- Link para editar -->
+                                            <form action="{{ route('empresas.destroy', $empresa) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:underline">Excluir</button>
+                                            </form>
+                                        </td> <!-- Link para editar e excluir -->
                                     </tr>
                                 @endforeach
                             </tbody>
