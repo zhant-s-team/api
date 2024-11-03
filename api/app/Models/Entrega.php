@@ -29,6 +29,11 @@ class Entrega extends Model
         'tipo_veiculo' => TipoCarro::class,
         'status' => EntregaStatus::class,
     ];
+
+    public function getTipoVeiculoAttribute($value)
+    {
+        return TipoCarro::from($value); // Converte o valor do banco de dados para a enumeração
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

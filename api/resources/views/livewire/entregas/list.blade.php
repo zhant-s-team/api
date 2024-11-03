@@ -1,7 +1,10 @@
 <?php
 
+namespace App\Http\Livewire;
+
 use App\Models\Entrega;
 use App\Models\Empresa;
+use App\Enum\TipoCarro; // Certifique-se de importar sua enum
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Volt\Component;
 use Livewire\Attributes\On;
@@ -10,7 +13,7 @@ new class extends Component {
     public Collection $entregas;
     public Collection $empresas;
     public array $cidadesOrigem;
-    public array $tiposVeiculo = ['BITREM', 'RODOTREM', 'CAVALO MECÂNICO', 'TOCO', 'TRUCK'];  // Tipos de veículo disponíveis
+    public array $tiposVeiculo;  // Propriedade para armazenar tipos de veículos disponíveis
     public ?int $empresaId = null;
     public ?string $cidadeOrigem = null;
     public ?string $tipoVeiculo = null;  // Propriedade para armazenar o tipo de veículo selecionado
@@ -20,6 +23,7 @@ new class extends Component {
     {
         $this->empresas = Empresa::all();
         $this->cidadesOrigem = Entrega::distinct()->pluck('cidade_origem')->toArray();
+        $this->tiposVeiculo = TipoCarro::cases();  // Obtém todos os casos da enumeração TipoCarro
         $this->getEntregas();
     }
 
@@ -66,6 +70,7 @@ new class extends Component {
         $this->getEntregas();
     }
 };
+
 ?>
 
 <div>
@@ -99,7 +104,7 @@ new class extends Component {
             <select wire:model="tipoVeiculo" id="tipoVeiculo" class="form-select mt-1 block w-full" wire:change="getEntregas">
                 <option value="">Todos os Tipos de Veículo</option>
                 @foreach($tiposVeiculo as $tipo)
-                    <option value="{{ $tipo }}">{{ $tipo }}</option>
+                    <option value="{{ $tipo->value }}">{{ $tipo->label() }}</option>  <!-- Usando ->label() -->
                 @endforeach
             </select>
         </div>
