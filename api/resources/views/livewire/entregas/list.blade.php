@@ -145,7 +145,7 @@ new class extends Component {
                         <p class="mt-4 text-lg text-gray-900">{{ $entrega->descricao }}</p>
                         <p class="mt-4 text-lg text-gray-900">Cidade inicial: {{ $entrega->cidade_origem }}</p>
                         <p class="mt-4 text-lg text-gray-900">Cidade destino: {{ $entrega->cidade_destino }}</p>
-                        <p class="mt-4 text-lg text-gray-900">Porte do veículo: {{ $entrega->tipo_veiculo }}</p>
+                        <p class="mt-4 text-lg text-gray-900">Tipo de Veículo: {{ $entrega->tipo_veiculo->label() }}</p>
                         <p class="mt-4 text-lg text-gray-900">Carga: {{ $entrega->carga }}</p>
                         <p class="mt-4 text-lg text-gray-900">Percurso em km: {{ $entrega->percurso }}</p>
                     @endif
