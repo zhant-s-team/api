@@ -9,12 +9,17 @@ use Livewire\Attributes\On;
 new class extends Component {
     public Collection $entregas;
     public Collection $empresas;
-    public ?int $empresaId = null;  // Propriedade para armazenar o ID da empresa selecionada
+    public array $cidadesOrigem;
+    public array $tiposVeiculo = ['BITREM', 'RODOTREM', 'CAVALO MECÂNICO', 'TOCO', 'TRUCK'];  // Tipos de veículo disponíveis
+    public ?int $empresaId = null;
+    public ?string $cidadeOrigem = null;
+    public ?string $tipoVeiculo = null;  // Propriedade para armazenar o tipo de veículo selecionado
     public ?Entrega $editing = null;
 
     public function mount(): void
     {
-        $this->empresas = Empresa::all();  // Carrega todas as empresas para o filtro
+        $this->empresas = Empresa::all();
+        $this->cidadesOrigem = Entrega::distinct()->pluck('cidade_origem')->toArray();
         $this->getEntregas();
     }
 
@@ -23,9 +28,19 @@ new class extends Component {
     {
         $query = Entrega::with('user');
 
-        // Filtra as entregas pela empresa selecionada, se houver
+        // Filtro por empresa
         if ($this->empresaId) {
             $query->where('empresa_id', $this->empresaId);
+        }
+
+        // Filtro por cidade de origem
+        if ($this->cidadeOrigem) {
+            $query->where('cidade_origem', $this->cidadeOrigem);
+        }
+
+        // Filtro por tipo de veículo
+        if ($this->tipoVeiculo) {
+            $query->where('tipo_veiculo', $this->tipoVeiculo);
         }
 
         $this->entregas = $query->latest()->get();
@@ -54,22 +69,46 @@ new class extends Component {
 ?>
 
 <div>
-    <!-- Campo de seleção de empresa -->
-    <div class="mb-4">
-        <label for="empresaId" class="block text-gray-700">Selecionar Empresa:</label>
-        <select wire:model="empresaId" id="empresaId" class="form-select mt-1 block w-full" wire:change="getEntregas">
-            <option value="">Todas as Empresas</option>
-            @foreach($empresas as $empresa)
-                <option value="{{ $empresa->id }}">{{ $empresa->nome }}</option>
-            @endforeach
-        </select>
+    <!-- Filtros alinhados em uma linha -->
+    <div class="flex space-x-4 mb-4">
+        <!-- Campo de seleção de empresa -->
+        <div>
+            <label for="empresaId" class="block text-gray-700">Selecionar Empresa:</label>
+            <select wire:model="empresaId" id="empresaId" class="form-select mt-1 block w-full" wire:change="getEntregas">
+                <option value="">Todas as Empresas</option>
+                @foreach($empresas as $empresa)
+                    <option value="{{ $empresa->id }}">{{ $empresa->nome }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Campo de seleção da cidade de origem -->
+        <div>
+            <label for="cidadeOrigem" class="block text-gray-700">Selecionar Cidade de Origem:</label>
+            <select wire:model="cidadeOrigem" id="cidadeOrigem" class="form-select mt-1 block w-full" wire:change="getEntregas">
+                <option value="">Todas as Cidades</option>
+                @foreach($cidadesOrigem as $cidade)
+                    <option value="{{ $cidade }}">{{ $cidade }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Campo de seleção do tipo de veículo -->
+        <div>
+            <label for="tipoVeiculo" class="block text-gray-700">Selecionar Tipo de Veículo:</label>
+            <select wire:model="tipoVeiculo" id="tipoVeiculo" class="form-select mt-1 block w-full" wire:change="getEntregas">
+                <option value="">Todos os Tipos de Veículo</option>
+                @foreach($tiposVeiculo as $tipo)
+                    <option value="{{ $tipo }}">{{ $tipo }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
     <!-- Lista de entregas filtradas -->
     <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
         @foreach ($entregas as $entrega)
             <div class="p-6 flex space-x-2" wire:key="{{ $entrega->id }}">
-                <!-- Exibe detalhes da entrega -->
                 <div class="flex-1">
                     <div class="flex justify-between items-center">
                         <div>

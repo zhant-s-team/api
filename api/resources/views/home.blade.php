@@ -1,31 +1,5 @@
 <div class="container-fluid">
 
-        <!-- Sistema de Filtros -->
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-12">
-                <form method="GET" action="#" class="d-flex">
-                    <input type="text" class="form-control me-2" name="cidade" placeholder="Cidade">
-                    <input type="text" class="form-control me-2" name="estado" placeholder="Estado">
-                    <input type="text" class="form-control me-2" name="tipoCarga" placeholder="Tipo de Carga">
-                    <div class="form-check form-switch me-2">
-                        <input class="form-check-input" type="checkbox" id="ate200km" name="ate200km">
-                        <label class="form-check-label" for="ate200km">Até 200km</label>
-                    </div>
-                    <select class="form-control me-2" name="porteVeiculo">
-                        <option value="">Porte de Veículo</option>
-                        <option value="pequeno">Pequeno</option>
-                        <option value="medio">Médio</option>
-                        <option value="grande">Grande</option>
-                    </select>
-                    <div class="form-check form-switch me-2">
-                        <input class="form-check-input" type="checkbox" id="ate500kgs" name="ate500kgs">
-                        <label class="form-check-label" for="ate500kgs">Até 500kgs</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                </form>
-            </div>
-        </div>
-        <!-- Fim do Sistema de Filtros -->
 
         <!-- Caixa com "Rotas Disponíveis" -->
         <div class="row mt-3">
