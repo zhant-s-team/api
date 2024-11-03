@@ -1,32 +1,39 @@
 <?php
 
 use App\Models\Entrega;
+use App\Models\Empresa;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Volt\Component;
 use Livewire\Attributes\On;
-use App\Enum\TipoCarro;
 
 new class extends Component {
     public Collection $entregas;
+    public Collection $empresas;
+    public ?int $empresaId = null;  // Propriedade para armazenar o ID da empresa selecionada
     public ?Entrega $editing = null;
 
     public function mount(): void
     {
+        $this->empresas = Empresa::all();  // Carrega todas as empresas para o filtro
         $this->getEntregas();
     }
 
     #[On('entrega-created')]
     public function getEntregas(): void
     {
-        $this->entregas = Entrega::with('user')
-            ->latest()
-            ->get();
+        $query = Entrega::with('user');
+
+        // Filtra as entregas pela empresa selecionada, se houver
+        if ($this->empresaId) {
+            $query->where('empresa_id', $this->empresaId);
+        }
+
+        $this->entregas = $query->latest()->get();
     }
 
     public function edit(Entrega $entrega): void
     {
         $this->editing = $entrega;
-        // Não precisa chamar getEntregas aqui, pois já temos as entregas carregadas
     }
 
     #[On('entrega-edit-canceled')]
@@ -47,12 +54,22 @@ new class extends Component {
 ?>
 
 <div>
+    <!-- Campo de seleção de empresa -->
+    <div class="mb-4">
+        <label for="empresaId" class="block text-gray-700">Selecionar Empresa:</label>
+        <select wire:model="empresaId" id="empresaId" class="form-select mt-1 block w-full" wire:change="getEntregas">
+            <option value="">Todas as Empresas</option>
+            @foreach($empresas as $empresa)
+                <option value="{{ $empresa->id }}">{{ $empresa->nome }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Lista de entregas filtradas -->
     <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
         @foreach ($entregas as $entrega)
             <div class="p-6 flex space-x-2" wire:key="{{ $entrega->id }}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
+                <!-- Exibe detalhes da entrega -->
                 <div class="flex-1">
                     <div class="flex justify-between items-center">
                         <div>
@@ -98,4 +115,3 @@ new class extends Component {
         @endforeach
     </div>
 </div>
-
