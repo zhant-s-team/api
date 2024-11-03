@@ -33,7 +33,7 @@ class EmpresaController extends Controller
         $validatedData['user_id'] = auth()->id();
 
         $empresa = Empresa::create($validatedData);
-        return response()->json($empresa, 201);
+        return redirect()->route('empresas')->with('success', 'Empresa atualizada com sucesso!');
     }
 
     public function show(Empresa $empresa)

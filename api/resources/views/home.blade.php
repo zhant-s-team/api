@@ -1,6 +1,4 @@
 <div class="container-fluid">
-
-
         <!-- Caixa com "Rotas Disponíveis" -->
         <div class="row mt-3">
             <div class="col-12">

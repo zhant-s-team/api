@@ -9,7 +9,6 @@ use App\Http\Livewire\Empresas\Edit;
 
 Route::view('/', 'welcome');
 // Rota para a página inicial após login
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::view('dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
 
