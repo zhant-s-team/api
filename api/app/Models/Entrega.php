@@ -14,7 +14,7 @@ class Entrega extends Model
 
     protected $fillable = [
         'empresa_id',
-        'motorista_id',
+        'user_id',
         'titulo',
         'descricao',
         'cidade_origem',
@@ -22,24 +22,19 @@ class Entrega extends Model
         'tipo_veiculo',
         'carga',
         'percurso',
-        'status'
+        'status',
     ];
 
-
-    protected function casts(): array
+    protected $casts = [
+        'tipo_veiculo' => TipoCarro::class,
+        'status' => EntregaStatus::class,
+    ];
+    public function user(): BelongsTo
     {
-        return [
-            'tipo_veiculo' => TipoCarro::class,
-            'status' => EntregaStatus::class,
-        ];
+        return $this->belongsTo(User::class, 'user_id');
     }
-    public function empresa(): BelongsTo
+    public function empresa()
     {
         return $this->belongsTo(Empresa::class);
-    }
-
-    public function motorista(): BelongsTo
-    {
-        return $this->belongsTo(Motorista::class);
     }
 }

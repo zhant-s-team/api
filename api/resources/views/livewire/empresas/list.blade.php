@@ -21,6 +21,7 @@
                                     <th class="px-4 py-2">Bairro</th>
                                     <th class="px-4 py-2">Número</th>
                                     <th class="px-4 py-2">Logo</th>
+                                    <th class="px-4 py-2">Ações</th> <!-- Coluna para ações -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +39,9 @@
                                                 Sem logo
                                             @endif
                                         </td>
+                                        <td class="border px-4 py-2">
+                                            <a href="{{ route('empresas.edit', $empresa) }}" class="text-blue-500 hover:underline">Editar</a>
+                                        </td> <!-- Link para editar -->
                                     </tr>
                                 @endforeach
                             </tbody>

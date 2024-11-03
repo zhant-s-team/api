@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EmpresaController extends Controller
 {
     public function index()
-{
-    $empresas = Empresa::all();
-    //return response()->json($empresas); RETORNAR EM JSON
-    return view('livewire.empresas.list', compact('empresas')); // Retorna a view com as empresas
-}
+    {
+        $empresas = Empresa::all();
+        //return response()->json($empresas); RETORNAR EM JSON
+        return view('livewire.empresas.list', compact('empresas')); // Retorna a view com as empresas
+    }
 
-    // Método para armazenar uma nova empresa
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -27,36 +26,55 @@ class EmpresaController extends Controller
             'logo' => 'nullable|string',
         ]);
 
-        // Define o user_id como o ID do usuário autenticado
-        $validatedData['user_id'] = auth()->id(); // Obtém o ID do usuário autenticado
+        $validatedData['user_id'] = auth()->id();
 
         $empresa = Empresa::create($validatedData);
         return response()->json($empresa, 201);
     }
 
-    // Exibir uma empresa
     public function show(Empresa $empresa)
     {
         return response()->json($empresa);
     }
 
-    // Atualizar
     public function update(Request $request, Empresa $empresa)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
+        // Validação dos dados
+        $validatedData = $request->validate([
             'cnpj' => 'required|string|max:18',
+            'nome' => 'required|string|max:255',
             'rua' => 'required|string|max:255',
             'bairro' => 'required|string|max:255',
-            'numero' => 'required|string|max:10',
+            'numero' => 'required|integer',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $empresa->update($request->all());
-        return response()->json($empresa);
+        // Atualiza os dados da empresa
+        $empresa->fill($validatedData);
+
+        // Atualizar o logo se um novo arquivo foi enviado
+        if ($request->hasFile('logo')) {
+            // Se já houver um logo, exclui o anterior
+            if ($empresa->logo) {
+                Storage::disk('public')->delete($empresa->logo);
+            }
+
+            // Salva o novo logo e atualiza o caminho no model
+            $path = $request->file('logo')->store('logos', 'public');
+            $empresa->logo = $path;
+        }
+
+        // Salva as alterações
+        $empresa->save();
+
+        return redirect()->route('empresas')->with('success', 'Empresa atualizada com sucesso!');
     }
 
-    // Deletar
+    public function edit(Empresa $empresa)
+    {
+        return view('livewire.empresas.edit', compact('empresa'));
+    }
+
     public function destroy(Empresa $empresa)
     {
         $empresa->delete();

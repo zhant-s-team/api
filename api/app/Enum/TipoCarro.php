@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum TipoCarro
+enum TipoCarro: string
 {
     case TOCO = 'TC';
     case BITREM = 'BT';

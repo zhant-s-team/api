@@ -52,32 +52,52 @@ new class extends Component {
 }; ?>
 
 <div>
-<form wire:submit="update">
+    <form wire:submit="update">
+        <label for="titulo" class="block font-medium text-sm text-gray-700">Título</label>
         <textarea
+            id="titulo"
             wire:model="titulo"
             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         ></textarea>
+
+        <label for="descricao" class="block font-medium text-sm text-gray-700">Descrição</label>
         <textarea
+            id="descricao"
             wire:model="descricao"
             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         ></textarea>
+
+        <label for="inicio" class="block font-medium text-sm text-gray-700">Início</label>
         <textarea
+            id="inicio"
             wire:model="inicio"
             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         ></textarea>
+
+        <label for="destino" class="block font-medium text-sm text-gray-700">Destino</label>
         <textarea
+            id="destino"
             wire:model="destino"
             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         ></textarea>
+
+        <label for="porte_veiculo" class="block font-medium text-sm text-gray-700">Porte do Veículo</label>
         <textarea
+            id="porte_veiculo"
             wire:model="porte_veiculo"
             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         ></textarea>
+
+        <label for="carga" class="block font-medium text-sm text-gray-700">Carga</label>
         <textarea
+            id="carga"
             wire:model="carga"
             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         ></textarea>
+
+        <label for="percurso" class="block font-medium text-sm text-gray-700">Percurso</label>
         <textarea
+            id="percurso"
             wire:model="percurso"
             class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         ></textarea>
@@ -89,7 +109,9 @@ new class extends Component {
         <x-input-error :messages="$errors->get('porte_veiculo')" class="mt-2" />
         <x-input-error :messages="$errors->get('carga')" class="mt-2" />
         <x-input-error :messages="$errors->get('percurso')" class="mt-2" />
+
         <x-primary-button class="mt-4">{{ __('Save') }}</x-primary-button>
         <button class="mt-4" wire:click.prevent="cancel">Cancel</button>
     </form>
 </div>
+

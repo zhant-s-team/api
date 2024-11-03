@@ -1,11 +1,15 @@
 <?php
 
 use App\Services\CidadeService;
+use App\Models\Empresa; // Importação do modelo Empresa
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new class extends Component
 {
+    #[Validate('required|integer')]
+    public int $empresa_id; // Campo para selecionar a empresa associada à entrega
+
     #[Validate('required|string|max:255')]
     public string $titulo = '';
 
@@ -27,27 +31,32 @@ new class extends Component
     #[Validate('required|integer|min:1')]
     public int $percurso = 0;
 
-    public array $cidades = []; // Variável para armazenar as cidades
+    public array $cidades = [];
+    public array $empresas = []; // Variável para armazenar as empresas
 
-    public function mount() // Método chamado ao montar o componente
+    public function mount()
     {
         $cidadeService = new CidadeService();
-        $this->cidades = $cidadeService->getCidades(); // Obtém as cidades da API
+        $this->cidades = $cidadeService->getCidades();
+        $this->empresas = Empresa::all()->toArray(); // Carrega todas as empresas
     }
 
     public function store(): void
     {
         $validated = $this->validate();
 
+        $validated['cidade_origem'] = $this->inicio;
+        $validated['cidade_destino'] = $this->destino;
+        $validated['created_by'] = auth()->id();
         auth()->user()->entregas()->create($validated);
 
         // Limpar os campos após o salvamento
-        $this->reset(['titulo', 'descricao', 'inicio', 'destino', 'porte_veiculo', 'carga', 'percurso']);
+        $this->reset(['empresa_id', 'titulo', 'descricao', 'inicio', 'destino', 'porte_veiculo', 'carga', 'percurso']);
 
         $this->dispatch('entrega-created');
     }
-
 };
+
 ?>
 
 
@@ -108,6 +117,15 @@ new class extends Component
         placeholder="Percurso em km"
         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
     />
+    <select
+    wire:model="empresa_id"
+    class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
+>
+    <option value="">Selecione a Empresa</option>
+    @foreach ($empresas as $empresa)
+        <option value="{{ $empresa['id'] }}">{{ $empresa['nome'] }}</option>
+    @endforeach
+    </select>
 
     <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
     <x-input-error :messages="$errors->get('descricao')" class="mt-2" />
