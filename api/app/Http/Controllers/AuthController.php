@@ -16,22 +16,39 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::all());
+        $users = User::all(); // Obter todos os usuários
+        return view('livewire.users.list', compact('users'));
+        //return UserResource::collection(User::all());
+        //return view('livewire.users.list', compact('users'));
     }
 
-    public function register(RegisterRequest $request)
+    public function register(Request $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cnh' => $request->cnh,
-            'password' => bcrypt($request->password),
-            'is_admin' => false
+        // Validação dos dados de entrada
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'cnh' => 'nullable|string', // CNH será preenchida apenas para motoristas
         ]);
 
+        // Definir se o usuário é administrador com base na ausência de CNH
+        $data['is_admin'] = is_null($data['cnh']);
+
+        // Criação do usuário
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'cnh' => $data['cnh'],
+            'is_admin' => $data['is_admin'],
+        ]);
+
+        // Gerar token de autenticação para o usuário
         $token = $user->createToken('auth-token')->plainTextToken;
         $user->token = $token;
 
+        // Retornar o usuário registrado com o token
         $resource = new UserResource($user);
         return $resource->response()->setStatusCode(201);
     }

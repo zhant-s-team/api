@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'cnh',
+        'is_admin',
     ];
 
     /**
@@ -49,5 +50,15 @@ class User extends Authenticatable
     public function entregas(): HasMany
     {
         return $this->hasMany(Entrega::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
+    public function isMotorista()
+    {
+        return ! $this->is_admin && ! is_null($this->cnh);
     }
 }

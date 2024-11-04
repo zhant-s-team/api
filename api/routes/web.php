@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\EmpresaController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::delete('/empresas/{empresa}', [EmpresaController::class, 'destroy'])->nam
 
 Route::resource('empresas', EmpresaController::class);
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas');
+
+Route::get('/users', [AuthController::class, 'index'])->name('users.index');
 
 Route::get('/usuarios', function () {
     return view('usuarios');
