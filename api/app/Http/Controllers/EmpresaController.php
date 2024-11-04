@@ -1,5 +1,15 @@
 <?php
-
+//toDO Corrigir problema com variavel is_admin dos usuarios, fazer a edição e exclusão de usuarios
+//toDO Adicionar no menu hamburguer as outras rotas também
+//toDO Todos os usuarios Web poderão editar e apagar, afinal todos são admnistradores.
+//toDO Trabalhar questão visual do site.
+//toDO Entender porque o formulario de criação de empresa não está sendo personalizado
+//toDO Testar relacionamentos entre usuario motorista ao aceitar a entrega//para mobile apenas
+//toDO Remover percurso em KMs, acho desnecessario para o motorista.
+//toDO No momento de autentiacação conferir junto se o is_admin é true, caso consiga resolver o problema, se não, conferir se a cnh é nula, se for nula logicamente é o admin
+//toDO Ver se consigo colocar o create de empresas como uma view da pasta livewire sem dar erro ou permitindo estilização como planejo
+//toDO Estilizar as entregas de acordo com o modelo criado anteriormente
+//toDO Se der tempo tentar fazer upload de imagem, se não utilizar link de url que converte para a imagem.
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
@@ -17,7 +27,7 @@ class EmpresaController extends Controller
 
     public function create()
 {
-    return view('livewire.empresa-form'); // Ajuste o caminho se necessário
+    return view('livewire.empresas.create'); // Ajuste o caminho se necessário
 }
     public function store(Request $request)
     {

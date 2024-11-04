@@ -11,15 +11,24 @@ use App\Http\Livewire\Empresas\Edit;
 Route::view('/', 'welcome');
 // Rota para a página inicial após login
 
+Route::get('/users', [AuthController::class, 'index'])->name('users.index');
+
+Route::get('/usuarios', function () {
+    return view('usuarios');
+})->name('usuarios.index');
+
+Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
+
+//Rotas de dashboard
 Route::view('dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
 
+//Rotas de empresas
 Route::get('entregas', [EntregaController::class, 'index'])->middleware(['auth', 'verified'])->name('entregas');
 
 //    Route::get('empresas', [EntregaController::class, 'index'])
 //    ->middleware(['auth', 'verified'])
 //    ->name('empresas');
 
-Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
 
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
 Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');
@@ -29,13 +38,6 @@ Route::delete('/empresas/{empresa}', [EmpresaController::class, 'destroy'])->nam
 
 Route::resource('empresas', EmpresaController::class);
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas');
-
-Route::get('/users', [AuthController::class, 'index'])->name('users.index');
-
-Route::get('/usuarios', function () {
-    return view('usuarios');
-})->name('usuarios.index');
-
 
 // Rotas de autenticação
 Auth::routes();

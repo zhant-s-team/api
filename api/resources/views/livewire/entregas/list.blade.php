@@ -65,7 +65,7 @@ new class extends Component {
 
     public function delete(Entrega $entrega): void
     {
-        $this->authorize('delete', $entrega);
+        //$this->authorize('delete', $entrega);
         $entrega->delete();
         $this->getEntregas();
     }
@@ -123,7 +123,7 @@ new class extends Component {
                                 <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                             @endunless
                         </div>
-                        @if ($entrega->user->is(auth()->user()))
+                        @if (true)
                             <x-dropdown>
                                 <x-slot name="trigger">
                                     <button>
