@@ -18,11 +18,17 @@ use Illuminate\Support\Facades\Storage;
 
 class EmpresaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $empresas = Empresa::all();
-        //return response()->json($empresas); RETORNAR EM JSON
-        return view('livewire.empresas.list', compact('empresas')); // Retorna a view com as empresas
+
+        // Verifique se a requisição foi feita via API (verificando o tipo de aceitação de resposta)
+        if ($request->wantsJson()) {
+            return response()->json($empresas);
+        }
+
+        // Caso contrário, retorna a view padrão
+        return view('livewire.empresas.list', compact('empresas'));
     }
 
     public function create()
