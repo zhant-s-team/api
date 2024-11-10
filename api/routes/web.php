@@ -13,17 +13,17 @@ Route::view('/', 'welcome');
 
 Route::get('/users', [AuthController::class, 'index'])->name('users.index');
 
+Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
+
 Route::get('/usuarios', function () {
     return view('usuarios');
 })->name('usuarios.index');
-
-Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
-
 //Rotas de dashboard
 Route::view('dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
 
 //Rotas de empresas
 Route::get('entregas', [EntregaController::class, 'index'])->middleware(['auth', 'verified'])->name('entregas');
+
 
 //    Route::get('empresas', [EntregaController::class, 'index'])
 //    ->middleware(['auth', 'verified'])
