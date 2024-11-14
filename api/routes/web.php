@@ -28,7 +28,9 @@ Route::get('entregas', [EntregaController::class, 'index'])->middleware(['auth',
 //    Route::get('empresas', [EntregaController::class, 'index'])
 //    ->middleware(['auth', 'verified'])
 //    ->name('empresas');
-
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
 
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
 Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');

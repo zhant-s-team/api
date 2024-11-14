@@ -29,6 +29,7 @@ class EmpresaController extends Controller
 
         // Caso contrário, retorna a view padrão
         return view('livewire.empresas.list', compact('empresas'));
+
     }
 
     public function create()
