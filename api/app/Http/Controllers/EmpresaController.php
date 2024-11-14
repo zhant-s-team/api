@@ -21,7 +21,7 @@ class EmpresaController extends Controller
     public function index()
     {
         $empresas = Empresa::all();
-        //return response()->json($empresas); RETORNAR EM JSON
+        //dd(response()->json($empresas)); retorna json detalhado
         return view('livewire.empresas.list', compact('empresas')); // Retorna a view com as empresas
     }
 
