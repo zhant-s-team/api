@@ -26,18 +26,15 @@ class Entrega extends Model
     ];
 
     protected $casts = [
-        'tipo_veiculo' => TipoCarro::class,
-        'status' => EntregaStatus::class,
+        'tipo_veiculo' => TipoCarro::class, // Laravel irá converter automaticamente para a enum TipoCarro
+        'status' => EntregaStatus::class, // Laravel irá converter automaticamente para a enum EntregaStatus
     ];
 
-    public function getTipoVeiculoAttribute($value)
-    {
-        return TipoCarro::from($value); // Converte o valor do banco de dados para a enumeração
-    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);

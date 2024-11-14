@@ -8,6 +8,8 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -53,22 +55,34 @@ class AuthController extends Controller
         return $resource->response()->setStatusCode(201);
     }
 
+/**
+     * Método de login de um usuário.
+     *
+     * @param  \App\Http\Requests\LoginRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        // Validação já feita pelo LoginRequest
+        $credentials = $request->only('email', 'password');
 
-        if (!$user) {
-            return response(['error' => 'O e-mail informado não está cadastrado.'], 401); //Unauthorized
+        // Tenta autenticar o usuário com as credenciais fornecidas
+        if (Auth::attempt($credentials)) {
+            // Usuário autenticado com sucesso
+            $user = Auth::user();
+
+            // Cria o token de autenticação
+            $token = $user->createToken('MeuAppToken')->plainTextToken;
+
+            // Retorna o token junto com o usuário autenticado
+            return response()->json([
+                'token' => $token,
+                'user'  => $user, // Retorna os dados do usuário também
+            ]);
         }
 
-        if ($user and Hash::check($request->password, $user->password)) {
-            $token = $user->createToken('auth-token')->plainTextToken;
-            $user->token = $token;
-
-            return new UserResource($user);
-        }
-
-        return response(['error' => 'A senha informada está incorreta.'], 401); //Unauthorized
+        // Se as credenciais forem inválidas
+        return response()->json(['message' => 'Credenciais inválidas'], 401);
     }
 
     public function validateToken(Request $request)

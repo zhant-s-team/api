@@ -5,10 +5,23 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12" x-data="{ showForm: false }"> <!-- Inicializa a variável showForm como false -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+
+                    <!-- Botão para abrir o formulário de criação de usuário -->
+                    <a href="#" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded"
+                       x-on:click.prevent="showForm = !showForm">
+                        + Adicionar Usuário
+                    </a>
+
+                    <!-- Exibir formulário de criação de usuário com Livewire, apenas quando showForm for true -->
+                    <div x-show="showForm">
+                        <livewire:user-registration />
+                    </div>
+
+                    <!-- Exibir lista de usuários -->
                     @if($users->isEmpty())
                         <p>Nenhum usuário cadastrado.</p>
                     @else
