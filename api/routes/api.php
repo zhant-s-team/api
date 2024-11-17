@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EntregaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
 
@@ -31,4 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/entregas/{id}', [EntregaController::class, 'update'])->name('entregas.update');
     Route::delete('/entregas/{id}', [EntregaController::class, 'destroy'])->name('entregas.destroy');
     Route::post('/entregas/{entregaId}/aceitar', [EntregaController::class, 'aceitarEntrega'])->name('entregas.aceitar');
+
+    //Rotas dos usuarios (criar, editar, excluir)
+    Route::resource('users', UserController::class);
 });

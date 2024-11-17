@@ -52,6 +52,14 @@ class User extends Authenticatable
         return $this->hasMany(Entrega::class);
     }
 
+        public static function booted()
+    {
+        static::saving(function ($user) {
+            if (is_null($user->cnh)) {
+                $user->is_admin = true;
+            }
+        });
+    }
     public function isAdmin()
     {
         return $this->is_admin;
