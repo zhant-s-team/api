@@ -46,9 +46,12 @@
                         <!-- Campo Logo -->
                         <div class="mb-4">
                             <label for="logo" class="block text-sm font-medium text-gray-700">Logo (deixe em branco para manter o logo atual):</label>
-                            <input type="file" name="logo" id="logo" class="mt-1 block w-full">
+                            <input type="url" name="logo" id="logo" value="{{ old('logo', $empresa->logo) }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="https://exemplo.com/logo.png">
                             @if ($empresa->logo)
-                                <p class="mt-2 text-gray-600">Logo atual: {{ $empresa->logo }}</p>
+                                <p class="mt-2 text-gray-600">
+                                    Logo atual:
+                                    <img src="{{ $empresa->logo }}" alt="Logo atual" class="mt-1" width="50">
+                                </p>
                             @endif
                         </div>
 

@@ -38,7 +38,7 @@
                                         <td class="border px-4 py-2">{{ $empresa->numero }}</td>
                                         <td class="border px-4 py-2">
                                             @if($empresa->logo)
-                                                <img src="{{ asset('storage/' . $empresa->logo) }}" alt="Logo" width="50">
+                                                <img src="{{ $empresa->logo }}" alt="Logo" width="50">
                                             @else
                                                 Sem logo
                                             @endif

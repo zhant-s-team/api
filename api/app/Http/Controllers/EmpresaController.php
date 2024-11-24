@@ -39,13 +39,14 @@ class EmpresaController extends Controller
             'rua' => 'required|string',
             'bairro' => 'required|string',
             'numero' => 'required|integer',
-            'logo' => 'nullable|string',
+            'logo' => 'nullable|url',
         ]);
 
         $validatedData['user_id'] = auth()->id();
 
-        $empresa = Empresa::create($validatedData);
-        return redirect()->route('empresas')->with('success', 'Empresa atualizada com sucesso!');
+        Empresa::create($validatedData);
+
+        return redirect()->route('empresas')->with('success', 'Empresa criada com sucesso!');
     }
 
     public function show(Empresa $empresa)
@@ -61,22 +62,10 @@ class EmpresaController extends Controller
             'rua' => 'sometimes|string|max:255',
             'bairro' => 'sometimes|string|max:255',
             'numero' => 'sometimes|integer',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'logo' => 'nullable|url',
         ]);
 
-
         $empresa->fill($validatedData);
-
-
-        if ($request->hasFile('logo')) {
-            if ($empresa->logo) {
-                Storage::disk('public')->delete($empresa->logo);
-            }
-
-            $path = $request->file('logo')->store('logos', 'public');
-            $empresa->logo = $path;
-        }
-
         $empresa->save();
 
         return redirect()->route('empresas')->with('success', 'Empresa atualizada com sucesso!');
