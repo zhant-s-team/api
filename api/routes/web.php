@@ -6,24 +6,37 @@ use App\Http\Controllers\EmpresaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntregaController;
 use App\Http\Controllers\Controller;
-use App\Http\Livewire\Empresas\Edit;
+
 
 Route::view('/', 'welcome');
-// Rota para a página inicial após login
-
 Route::get('/users', [AuthController::class, 'index'])->name('users.index');
-
 Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
-
-Route::get('/usuarios', function () {
-    return view('usuarios');
-})->name('usuarios.index');
 //Rotas de dashboard
 Route::view('dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
-
 //Rotas de empresas
-Route::get('entregas', [EntregaController::class, 'index'])->middleware(['auth', 'verified'])->name('entregas');
 
+
+// Listagem de entregas
+
+Route::get('entregas', [EntregaController::class, 'index'])->middleware(['auth', 'verified'])->name('entregas');
+Route::get('/entregas', [EntregaController::class, 'index'])->middleware(['auth', 'verified'])->name('entregas');
+
+Route::get('/entregas/create', [EntregaController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('entregas.create');
+Route::post('/entregas', [EntregaController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('entregas.store');
+Route::get('/entregas/{id}/edit', [EntregaController::class, 'edit'])
+    ->middleware(['auth', 'verified'])
+    ->name('entregas.edit');
+Route::put('/entregas/{id}', [EntregaController::class, 'update'])
+    ->middleware(['auth', 'verified'])
+    ->name('entregas.update');
+Route::delete('/entregas/{id}', [EntregaController::class, 'destroy'])
+    ->middleware(['auth', 'verified'])
+    ->name('entregas.destroy');
+    Route::post('/entrega', [EntregaController::class, 'store'])->name('entrega.store');
 
 //    Route::get('empresas', [EntregaController::class, 'index'])
 //    ->middleware(['auth', 'verified'])
@@ -31,19 +44,9 @@ Route::get('entregas', [EntregaController::class, 'index'])->middleware(['auth',
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });
-
-Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
-Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');
-Route::get('/empresas/{empresa}/edit', [EmpresaController::class, 'edit'])->name('empresas.edit');
-Route::put('/empresas/{empresa}', [EmpresaController::class, 'update'])->name('empresas.update');
-Route::delete('/empresas/{empresa}', [EmpresaController::class, 'destroy'])->name('empresas.destroy');
-
 Route::resource('empresas', EmpresaController::class);
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas');
-
 // Rotas de autenticação
 Auth::routes();
-
 Route::get('/cidades', [CidadeController::class, 'index']);
-
 require __DIR__.'/auth.php';

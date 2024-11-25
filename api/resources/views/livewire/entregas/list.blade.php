@@ -30,7 +30,7 @@ new class extends Component {
     #[On('entrega-created')]
     public function getEntregas(): void
     {
-        $query = Entrega::with('user');
+        $query = Entrega::with('empresa');
 
         // Filtro por empresa
         if ($this->empresaId) {
@@ -73,89 +73,94 @@ new class extends Component {
 
 ?>
 
-<div>
-    <!-- Filtros alinhados em uma linha -->
-    <div class="flex space-x-4 mb-4">
-        <!-- Campo de seleção de empresa -->
-        <div>
-            <label for="empresaId" class="block text-gray-700">Selecionar Empresa:</label>
-            <select wire:model="empresaId" id="empresaId" class="form-select mt-1 block w-full" wire:change="getEntregas">
-                <option value="">Todas as Empresas</option>
-                @foreach($empresas as $empresa)
-                    <option value="{{ $empresa->id }}">{{ $empresa->nome }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Campo de seleção da cidade de origem -->
-        <div>
-            <label for="cidadeOrigem" class="block text-gray-700">Selecionar Cidade de Origem:</label>
-            <select wire:model="cidadeOrigem" id="cidadeOrigem" class="form-select mt-1 block w-full" wire:change="getEntregas">
-                <option value="">Todas as Cidades</option>
-                @foreach($cidadesOrigem as $cidade)
-                    <option value="{{ $cidade }}">{{ $cidade }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Campo de seleção do tipo de veículo -->
-        <div>
-            <label for="tipoVeiculo" class="block text-gray-700">Selecionar Tipo de Veículo:</label>
-            <select wire:model="tipoVeiculo" id="tipoVeiculo" class="form-select mt-1 block w-full" wire:change="getEntregas">
-                <option value="">Todos os Tipos de Veículo</option>
-                @foreach($tiposVeiculo as $tipo)
-                    <option value="{{ $tipo->value }}">{{ $tipo->label() }}</option>  <!-- Usando ->label() -->
-                @endforeach
-            </select>
-        </div>
-    </div>
-
-    <!-- Lista de entregas filtradas -->
-    <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-        @foreach ($entregas as $entrega)
-            <div class="p-6 flex space-x-2" wire:key="{{ $entrega->id }}">
-                <div class="flex-1">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-gray-800">{{ $entrega->empresa->nome }}</span>
-                            <small class="ml-2 text-sm text-gray-600">{{ $entrega->created_at->format('j M Y, g:i a') }}</small>
-                            @unless ($entrega->created_at->eq($entrega->updated_at))
-                                <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
-                            @endunless
-                        </div>
-                        @if (true)
-                            <x-dropdown>
-                                <x-slot name="trigger">
-                                    <button>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        </svg>
-                                    </button>
-                                </x-slot>
-                                <x-slot name="content">
-                                    <x-dropdown-link wire:click="edit({{ $entrega->id }})">
-                                        {{ __('Edit') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link wire:click="delete({{ $entrega->id }})" wire:confirm="Are you sure to delete this entrega?">
-                                        {{ __('Delete') }}
-                                    </x-dropdown-link>
-                                </x-slot>
-                            </x-dropdown>
-                        @endif
-                    </div>
-                    @if ($entrega->is($editing))
-                        <livewire:entregas.edit :entrega="$entrega" :key="$entrega->id" />
+<div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+    @foreach ($entregas as $entrega)
+        <article class="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8" wire:key="{{ $entrega->id }}">
+            <div class="flex items-start sm:gap-8">
+                <div class="hidden sm:grid sm:w-20 sm:h-20 sm:shrink-0 sm:rounded-full sm:border-2 sm:border-indigo-500 overflow-hidden" aria-hidden="true">
+                    @if($entrega->empresa->logo)
+                        <img src="{{ $entrega->empresa->logo }}" alt="Logo da Empresa" class="w-full h-full object-cover rounded-full">
                     @else
-                        <p class="mt-4 text-lg text-gray-900">{{ $entrega->titulo }}</p>
-                        <p class="mt-4 text-lg text-gray-900">{{ $entrega->descricao }}</p>
-                        <p class="mt-4 text-lg text-gray-900">Cidade inicial: {{ $entrega->cidade_origem }}</p>
-                        <p class="mt-4 text-lg text-gray-900">Cidade destino: {{ $entrega->cidade_destino }}</p>
-                        <p class="mt-4 text-lg text-gray-900">Tipo de Veículo: {{ $entrega->tipo_veiculo->label() }}</p>
-                        <p class="mt-4 text-lg text-gray-900">Carga: {{ $entrega->carga }}</p>
-                        <p class="mt-4 text-lg text-gray-900">Percurso em km: {{ $entrega->percurso }}</p>
+                        <span class="text-gray-400 flex items-center justify-center w-full h-full">Sem logo</span> <!-- Caso a empresa não tenha logo -->
                     @endif
                 </div>
+
+
+
+
+
+                <div>
+                    <strong class="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
+                        {{ __('Entrega #') }}{{ $entrega->id }}
+                    </strong>
+
+                    <h3 class="mt-4 text-lg font-medium sm:text-xl">
+                        {{ $entrega->titulo }}
+                    </h3>
+
+                    <p class="mt-1 text-sm text-gray-700">
+                        {{ $entrega->descricao }}
+                    </p>
+
+                    <p class="mt-1 text-sm text-gray-700">
+                        <strong>{{ __('Empresa: ') }}</strong>{{ $entrega->empresa->nome }}
+                    </p>
+                    <p class="mt-1 text-sm text-gray-700">
+                        <strong>{{ __('Cidade Origem: ') }}</strong>{{ $entrega->cidade_origem }}
+                    </p>
+                    <p class="mt-1 text-sm text-gray-700">
+                        <strong>{{ __('Cidade Destino: ') }}</strong>{{ $entrega->cidade_destino }}
+                    </p>
+                    <p class="mt-1 text-sm text-gray-700">
+                        <strong>{{ __('Tipo de Veículo: ') }}</strong>{{ $entrega->tipo_veiculo->label() }}
+                    </p>
+                    <p class="mt-1 text-sm text-gray-700">
+                        <strong>{{ __('Carga: ') }}</strong>{{ $entrega->carga }}
+                    </p>
+                    <p class="mt-1 text-sm text-gray-700">
+                        <strong>{{ __('Percurso (km): ') }}</strong>{{ $entrega->percurso }}
+                    </p>
+
+                    <div class="mt-4 sm:flex sm:items-center sm:gap-2">
+                        <div class="flex items-center gap-1 text-gray-500">
+                            <svg
+                                class="size-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
+
+                            <p class="text-xs font-medium">{{ __('Última atualização: ') }}{{ $entrega->updated_at->format('d/m/Y H:i') }}</p>
+                        </div>
+
+                        <!-- Botões de ação -->
+                        <div class="mt-4 flex gap-2">
+                            <a href="{{ route('entregas.edit', $entrega->id) }}" >
+                            <button
+                                class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600"
+                                wire:click="edit({{ $entrega->id }})"
+                            >
+                                {{ __('Editar') }}
+                            </button>
+                            </a>
+                            <button
+                                class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600"
+                                wire:click="delete({{ $entrega->id }})"
+                            >
+                                {{ __('Excluir') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        @endforeach
-    </div>
+        </article>
+    @endforeach
 </div>

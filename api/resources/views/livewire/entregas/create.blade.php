@@ -65,77 +65,136 @@ new class extends Component
 };
 
 ?>
-<div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-<form wire:submit.prevent="store">
-    <input
-        wire:model="titulo"
-        placeholder="Título"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    />
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900">
+                <form wire:submit.prevent="store">
 
-    <textarea
-        wire:model="descricao"
-        placeholder="Descrição"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    ></textarea>
+                    <!-- Título do Formulário -->
+                    <h2 class="font-semibold text-xl text-gray-800 mb-6">{{ __('Cadastrar Entrega') }}</h2>
 
+                    <!-- Campo Título -->
+                    <div class="mb-4">
+                        <label for="titulo" class="block text-sm font-medium text-gray-700">{{ __('Título') }}</label>
+                        <input
+                            wire:model="titulo"
+                            id="titulo"
+                            placeholder="Título da entrega"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        />
+                        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+                    </div>
 
-    <select wire:model="inicio">
-        <option value="">Selecione a cidade de origem</option>
-        @foreach($cidades as $cidade)
-            <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
-        @endforeach
-    </select>
+                    <!-- Campo Descrição -->
+                    <div class="mb-4">
+                        <label for="descricao" class="block text-sm font-medium text-gray-700">{{ __('Descrição') }}</label>
+                        <textarea
+                            wire:model="descricao"
+                            id="descricao"
+                            placeholder="Descrição detalhada"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        ></textarea>
+                        <x-input-error :messages="$errors->get('descricao')" class="mt-2" />
+                    </div>
 
-    <select wire:model="destino">
-        <option value="">Selecione a cidade de destino</option>
-        @foreach($cidades as $cidade)
-            <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
-        @endforeach
-    </select>
+                    <!-- Seletor Cidade de Origem -->
+                    <div class="mb-4">
+                        <label for="inicio" class="block text-sm font-medium text-gray-700">{{ __('Cidade de Origem') }}</label>
+                        <select
+                            wire:model="inicio"
+                            id="inicio"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        >
+                            <option value="">{{ __('Selecione a cidade de origem') }}</option>
+                            @foreach($cidades as $cidade)
+                                <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('inicio')" class="mt-2" />
+                    </div>
 
-    <!-- Campo de seleção para tipo do Veículo -->
-    <select
-        wire:model="tipo_veiculo"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    >
-        <option value="">Selecione o tipo de veículo</option>
-        @foreach ($tipoVeiculos as $tipo)
-            <option value="{{ $tipo['id'] }}">{{ $tipo['label'] }}</option>
-        @endforeach
-    </select>
+                    <!-- Seletor Cidade de Destino -->
+                    <div class="mb-4">
+                        <label for="destino" class="block text-sm font-medium text-gray-700">{{ __('Cidade de Destino') }}</label>
+                        <select
+                            wire:model="destino"
+                            id="destino"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        >
+                            <option value="">{{ __('Selecione a cidade de destino') }}</option>
+                            @foreach($cidades as $cidade)
+                                <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('destino')" class="mt-2" />
+                    </div>
 
-    <input
-        wire:model="carga"
-        placeholder="Carga"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    />
+                    <!-- Seletor Tipo de Veículo -->
+                    <div class="mb-4">
+                        <label for="tipo_veiculo" class="block text-sm font-medium text-gray-700">{{ __('Tipo de Veículo') }}</label>
+                        <select
+                            wire:model="tipo_veiculo"
+                            id="tipo_veiculo"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        >
+                            <option value="">{{ __('Selecione o tipo de veículo') }}</option>
+                            @foreach ($tipoVeiculos as $tipo)
+                                <option value="{{ $tipo['id'] }}">{{ $tipo['label'] }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('tipo_veiculo')" class="mt-2" />
+                    </div>
 
-    <input
-        type="number"
-        wire:model="percurso"
-        placeholder="Percurso em km"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    />
+                    <!-- Campo Carga -->
+                    <div class="mb-4">
+                        <label for="carga" class="block text-sm font-medium text-gray-700">{{ __('Carga') }}</label>
+                        <input
+                            wire:model="carga"
+                            id="carga"
+                            placeholder="Peso da carga"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        />
+                        <x-input-error :messages="$errors->get('carga')" class="mt-2" />
+                    </div>
 
-    <select
-        wire:model="empresa_id"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    >
-        <option value="">Selecione a Empresa</option>
-        @foreach ($empresas as $empresa)
-            <option value="{{ $empresa['id'] }}">{{ $empresa['nome'] }}</option>
-        @endforeach
-    </select>
+                    <!-- Campo Percurso -->
+                    <div class="mb-4">
+                        <label for="percurso" class="block text-sm font-medium text-gray-700">{{ __('Percurso (km)') }}</label>
+                        <input
+                            type="number"
+                            wire:model="percurso"
+                            id="percurso"
+                            placeholder="Distância em km"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        />
+                        <x-input-error :messages="$errors->get('percurso')" class="mt-2" />
+                    </div>
 
-    <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
-    <x-input-error :messages="$errors->get('descricao')" class="mt-2" />
-    <x-input-error :messages="$errors->get('inicio')" class="mt-2" />
-    <x-input-error :messages="$errors->get('destino')" class="mt-2" />
-    <x-input-error :messages="$errors->get('tipo_veiculo')" class="mt-2" />
-    <x-input-error :messages="$errors->get('carga')" class="mt-2" />
-    <x-input-error :messages="$errors->get('percurso')" class="mt-2" />
+                    <!-- Seletor Empresa -->
+                    <div class="mb-4">
+                        <label for="empresa_id" class="block text-sm font-medium text-gray-700">{{ __('Selecione a Empresa') }}</label>
+                        <select
+                            wire:model="empresa_id"
+                            id="empresa_id"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        >
+                            <option value="">{{ __('Selecione a empresa') }}</option>
+                            @foreach ($empresas as $empresa)
+                                <option value="{{ $empresa['id'] }}">{{ $empresa['nome'] }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('empresa_id')" class="mt-2" />
+                    </div>
 
-    <x-primary-button class="mt-4">{{ __('Salvar') }}</x-primary-button>
-</form>
+                    <!-- Botão de Enviar -->
+                    <button type="submit" class="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        {{ __('Salvar') }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+

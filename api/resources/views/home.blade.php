@@ -6,7 +6,10 @@
                     <strong>Rotas Disponíveis</strong>
                 </div>
             </div>
+        </div><div class="text-center mt-3">
+            <a href="{{ route('entregas') }}" class="btn btn-primary">Criar Nova Entrega</a>
         </div>
         <!-- Fim da Caixa com "Rotas Disponíveis" -->
         <livewire:entregas.list />
+
     </div>
