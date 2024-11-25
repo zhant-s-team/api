@@ -65,7 +65,7 @@ new class extends Component
 };
 
 ?>
-
+<div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
 <form wire:submit.prevent="store">
     <input
         wire:model="titulo"
@@ -79,22 +79,17 @@ new class extends Component
         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
     ></textarea>
 
-    <select
-        wire:model="inicio"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    >
-        <option value="">Selecione a cidade de início</option>
-        @foreach ($cidades as $cidade)
+
+    <select wire:model="inicio">
+        <option value="">Selecione a cidade de origem</option>
+        @foreach($cidades as $cidade)
             <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
         @endforeach
     </select>
 
-    <select
-        wire:model="destino"
-        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mb-2"
-    >
+    <select wire:model="destino">
         <option value="">Selecione a cidade de destino</option>
-        @foreach ($cidades as $cidade)
+        @foreach($cidades as $cidade)
             <option value="{{ $cidade['nome'] }}">{{ $cidade['nome'] }}</option>
         @endforeach
     </select>
@@ -143,3 +138,4 @@ new class extends Component
 
     <x-primary-button class="mt-4">{{ __('Salvar') }}</x-primary-button>
 </form>
+</div>
