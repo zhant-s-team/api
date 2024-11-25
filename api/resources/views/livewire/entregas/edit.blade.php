@@ -37,17 +37,30 @@
                             <textarea name="descricao" id="descricao" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>{{ old('descricao', $entrega->descricao) }}</textarea>
                         </div>
 
-                        <!-- Campo Cidade Origem -->
-                        <div class="mb-4">
-                            <label for="cidade_origem" class="block text-sm font-medium text-gray-700">Cidade de Origem:</label>
-                            <input type="text" name="cidade_origem" id="cidade_origem" value="{{ old('cidade_origem', $entrega->cidade_origem) }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
-                        </div>
+<!-- Campo Cidade Origem -->
+<div class="mb-4">
+    <label for="cidade_origem" class="block text-sm font-medium text-gray-700">Cidade de Origem:</label>
+    <select name="cidade_origem" id="cidade_origem" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        @foreach ($cidades as $cidade)
+            <option value="{{ $cidade['nome'] }}" {{ $cidade['nome'] == $entrega->cidade_origem ? 'selected' : '' }}>
+                {{ $cidade['nome'] }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-                        <!-- Campo Cidade Destino -->
-                        <div class="mb-4">
-                            <label for="cidade_destino" class="block text-sm font-medium text-gray-700">Cidade de Destino:</label>
-                            <input type="text" name="cidade_destino" id="cidade_destino" value="{{ old('cidade_destino', $entrega->cidade_destino) }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
-                        </div>
+<!-- Campo Cidade Destino -->
+<div class="mb-4">
+    <label for="cidade_destino" class="block text-sm font-medium text-gray-700">Cidade de Destino:</label>
+    <select name="cidade_destino" id="cidade_destino" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        @foreach ($cidades as $cidade)
+            <option value="{{ $cidade['nome'] }}" {{ $cidade['nome'] == $entrega->cidade_destino ? 'selected' : '' }}>
+                {{ $cidade['nome'] }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
 
                         <!-- Campo Tipo de Veículo -->
                         <div class="mb-4">

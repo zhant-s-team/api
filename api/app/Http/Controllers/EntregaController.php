@@ -107,11 +107,14 @@ class EntregaController extends Controller
         $cidadeService = new CidadeService();
         $cidades = $cidadeService->getCidades();  // Carregar todas as cidades
         $empresas = Empresa::all(); // Carregar todas as empresas
-        return view('livewire.entregas.edit', compact('entrega', 'empresas'));
+        return view('livewire.entregas.edit', compact('entrega', 'empresas', 'cidades'));
     }
 
     public function update(Request $request, $id)
     {
+        $cidadeService = new CidadeService();
+        $cidades = $cidadeService->getCidades();  // Carregar todas as cidades
+        $empresas = Empresa::all(); // Carregar todas as empresas
         $entrega = Entrega::findOrFail($id);
 
         $validatedData = $request->validate([
