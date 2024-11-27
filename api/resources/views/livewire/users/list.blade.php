@@ -39,7 +39,7 @@
                                         <td class="border px-4 py-2">
                                             <a href="{{ route('users.edit', $user->id) }}" class="text-blue-600 hover:text-blue-800">Editar</a>
                                             |
-                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline">
+                                            <form action="{{ route('users.destroy', $user->id) }}" method="DELETE" class="inline">
     @csrf
     @method('DELETE')
     <button type="submit" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</button>

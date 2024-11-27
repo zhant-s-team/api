@@ -62,7 +62,7 @@ class EntregaController extends Controller
     {
         $empresas = Empresa::all(); // Carregar todas as empresas
         $cidades = $cidadeService->getCidades();
-        return view('entregas', compact('empresas'));
+        return view('dashboard', compact('empresas'));
     }
 
     public function store(Request $request)
