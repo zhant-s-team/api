@@ -71,7 +71,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        // Lógica para editar um usuário, se necessário
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('users.index')->with('error', 'Usuário não encontrado');
+        }
+
+        return view('livewire.users.edit', compact('user'));  // Altere o nome da view conforme sua estrutura
     }
 
     /**
@@ -79,10 +85,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Busca o usuário no banco de dados
         $user = User::find($id);
 
         if (!$user) {
-            return response()->json(['message' => 'Usuário não encontrado.'], 404);
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Usuário não encontrado.'], 404);
+            }
+            return redirect()->route('users.index')->with('error', 'Usuário não encontrado');
         }
 
         // Validação dos dados recebidos
@@ -90,25 +100,33 @@ class UserController extends Controller
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8|confirmed',
-            'cnh' => 'nullable|string', // CNH também pode ser atualizada
+            'cnh' => 'nullable|string',
         ]);
 
-        // Verificar se a CNH foi preenchida e definir is_admin como false
+        // Lógica para definir o tipo de usuário (admin ou motorista)
         if (is_null($data['cnh'])) {
-            $data['is_admin'] = true; // Se CNH for null, usuário é admin
+            $data['is_admin'] = true; // Se CNH for null, o usuário é admin
         } else {
-            $data['is_admin'] = false; // Caso contrário, ele é motorista
+            $data['is_admin'] = false; // Caso contrário, o usuário é motorista
         }
 
-        // Verificar e atualizar a senha, se necessário
+        // Atualizar a senha, se for fornecida
         if (isset($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
 
+        // Atualizar os dados do usuário
         $user->update($data);
 
-        return response()->json(['message' => 'Usuário atualizado com sucesso.', 'user' => $user], 200);
+        // Resposta para API (JSON)
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Usuário atualizado com sucesso.', 'user' => $user], 200);
+        }
+
+        // Redirecionar para a lista de usuários com sucesso na web
+        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -118,12 +136,26 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return response()->json(['message' => 'Usuário não encontrado.'], 404);
+            // Para API
+            if (request()->expectsJson()) {
+                return response()->json(['message' => 'Usuário não encontrado.'], 404);
+            }
+
+            // Para Web
+            return redirect()->route('users.index')->with('error', 'Usuário não encontrado');
         }
 
         // Deletar o usuário
         $user->delete();
 
-        return response()->json(['message' => 'Usuário excluído com sucesso.'], 200);
+        // Para API
+        if (request()->expectsJson()) {
+            return response()->json(['message' => 'Usuário excluído com sucesso.'], 200);
+        }
+
+        // Para Web
+        return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso');
     }
+
+
 }
