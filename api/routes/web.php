@@ -5,6 +5,7 @@ use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\EmpresaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntregaController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Controller;
 
 
@@ -46,6 +47,11 @@ Route::fallback(function () {
 });
 Route::resource('empresas', EmpresaController::class);
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas');
+
+Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
+Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+
 // Rotas de autenticação
 Auth::routes();
 Route::get('/cidades', [CidadeController::class, 'index']);
