@@ -12,15 +12,25 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return response()->json(User::all(), 200);
+{
+    $users = User::all(); // Obter todos os usuários
+
+    // Verificar se a requisição quer resposta JSON
+    if (request()->wantsJson()) {
+        return response()->json($users, 200);
     }
+
+    // Caso contrário, retorna a view
+    return view('livewire.users.list', compact('users'));
+}
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        return view('livewire.users.create');
         // Lógica para criar um novo usuário, se necessário
     }
 

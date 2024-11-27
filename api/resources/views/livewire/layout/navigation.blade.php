@@ -31,10 +31,10 @@ new class extends Component
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
+                        {{ __('Tabela de entregas') }}
                     </x-nav-link>
                     <x-nav-link :href="route('entregas')" :active="request()->routeIs('entregas')" wire:navigate>
-                        {{ __('Entregas') }}
+                        {{ __('Criar entregas') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('empresas')" :active="request()->routeIs('empresas')" wire:navigate>

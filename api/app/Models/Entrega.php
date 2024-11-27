@@ -23,6 +23,7 @@ class Entrega extends Model
         'carga',
         'percurso',
         'status',
+        'accept_by',
     ];
 
     protected $casts = [

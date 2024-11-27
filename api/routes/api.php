@@ -31,7 +31,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/entregas', [EntregaController::class, 'store'])->name('entregas.store');
     Route::put('/entregas/{id}', [EntregaController::class, 'update'])->name('entregas.update');
     Route::delete('/entregas/{id}', [EntregaController::class, 'destroy'])->name('entregas.destroy');
+
     Route::post('/entregas/{entregaId}/aceitar', [EntregaController::class, 'aceitarEntrega'])->name('entregas.aceitar');
+
+    Route::post('/entregas/{entregaId}/concluir', [EntregaController::class, 'concluirEntrega'])->name('entregas.concluir');
+    Route::put('/entregas/{entregaId}/cancelar', [EntregaController::class, 'cancelarEntrega'])->name('entregas.cancelar');
 
     //Rotas dos usuarios (criar, editar, excluir)
     Route::resource('users', UserController::class);

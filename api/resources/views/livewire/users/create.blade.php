@@ -31,6 +31,14 @@
         @error('password_confirmation') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
     </div>
 
+    <!-- CNH -->
+    <div>
+        <label for="cnh" class="block text-sm font-semibold text-gray-700">CNH (se aplicável)</label>
+        <input type="text" wire:model="cnh" id="cnh"
+            class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        @error('cnh') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+    </div>
+
     <!-- Botão de envio -->
     <button type="submit" class="w-full py-3 mt-4 text-white bg-blue-500 hover:bg-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         Cadastrar Usuário
