@@ -1,11 +1,7 @@
 <?php
 //toDO Adicionar no menu hamburguer as outras rotas também
-//toDO Trabalhar questão visual do site.
 //toDO Testar relacionamentos entre usuario motorista ao aceitar a entrega//para mobile apenas
 //toDO Remover percurso em KMs, acho desnecessario para o motorista.
-//toDO Ver se consigo colocar o create de empresas como uma view da pasta livewire sem dar erro ou permitindo estilização como planejo
-//toDO Estilizar as entregas de acordo com o modelo criado anteriormente
-//toDO Se der tempo tentar fazer upload de imagem, se não utilizar link de url que converte para a imagem.
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;

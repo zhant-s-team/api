@@ -3,13 +3,15 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntregaController;
 use App\Http\Controllers\Controller;
 
 
 Route::view('/', 'welcome');
-Route::get('/users', [AuthController::class, 'index'])->name('users.index');
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
 Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
 //Rotas de dashboard
 Route::view('dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');

@@ -151,14 +151,41 @@ class EntregaController extends Controller
         return redirect()->route('entregas.list')->with('success', 'Entrega excluída com sucesso.');
     }
 
-    public function aceitarEntrega($entregaId)
+    public function aceitarEntrega($entregaId, Request $request)
     {
         $entrega = Entrega::findOrFail($entregaId);
 
-        $entrega->status = 'A'; // Exemplo: status alterado para aceito
+        $entrega->status = 'A'; // Status alterado para aceito
+        $entrega->accept_by = $request->user()->id; // Define o usuário que aceitou
         $entrega->save();
 
-        return response()->json(['message' => 'Entrega aceita com sucesso!']);
+        return response()->json(['message' => 'Entrega aceita com sucesso!', 'entrega' => $entrega]);
+    }
+    public function concluirEntrega($entregaId)
+    {
+    // Buscar a entrega pelo ID
+    $entrega = Entrega::findOrFail($entregaId);
+
+    // Alterar o status para "C" (concluída)
+    $entrega->status = 'C';
+    $entrega->save();
+
+    // Retornar resposta JSON
+    return response()->json(['message' => 'Entrega concluída com sucesso!']);
+    }
+    public function cancelarEntrega($entregaId, Request $request)
+    {
+    $entrega = Entrega::findOrFail($entregaId);
+
+    // Verifica se a entrega foi aceita antes de permitir o cancelamento
+
+
+    // Alterar o status para "D" (pendente) ou outro status que você preferir
+    $entrega->status = 'D'; // Exemplo: status "D" para "pendente"
+    $entrega->save();
+
+    // Retornar resposta JSON
+    return response()->json(['message' => 'Entrega cancelada com sucesso!', 'entrega' => $entrega]);
     }
 }
 
